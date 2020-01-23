@@ -1,0 +1,111 @@
+<!doctype html><html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <title>Vehículos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- CSS -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- scripts -->
+    <script src="../models/car.js"></script>
+    <script src="../models/wheel.js"></script>
+    
+</head>
+
+<body class="text-center mt-5">
+  <div class="container">
+    <h1 class="mb-5">Ejercicio veh&iacute;culos</h1>
+
+    <form method="POST" action="" name="vehiculos" id="formPaso1" novalidate>
+      
+      <div class="form-row mb-4 paso1">
+        <div class="col-md-4 mb-3 text-left">
+          <label>Plate</label> <br>
+          <input type="text" class="form-control" name="plate" id="plate">
+        </div>
+        <div class="col-md-4 mb-3 text-left">
+          <label>Brand</label> <br>
+          <input type="text" class="form-control" name="brand" id="brand">
+        </div>
+        <div class="col-md-4 mb-3 text-left">
+          <label>Color</label> <br>
+          <input type="text" class="form-control" name="color" id="color">
+        </div>        
+      </div>
+
+      <button class="btn btn-primary" onclick="createCar(
+        document.getElementById('plate').value,
+        document.getElementById('brand').value,
+        document.getElementById('color').value
+        ); return false;">Create car
+      </button>
+    </form>
+
+
+    <form method="POST" action="" name="vehiculosPaso2" id="formPaso2" class="paso2" novalidate>
+
+        <div class="form-row mb-4">
+          <div class="col-md-3 mb-3 text-left">
+            <label>Marca rueda 1</label> <br>
+            <input type="text" class="form-control" name="marcaRueda1" id="marcaRueda1">
+          </div>
+          <div class="col-md-3 mb-3 text-left">
+            <label>Diámetro rueda 1</label> <br>
+            <input type="text" class="form-control" name="diamRueda1" id="diamRueda1">
+          </div>
+          <div class="col-md-3 mb-3 text-left">
+            <label>Marca rueda 2</label> <br>
+            <input type="text" class="form-control" name="marcaRueda2" id="marcaRueda2">
+          </div>
+          <div class="col-md-3 mb-3 text-left">
+            <label>Diámetro rueda 2</label> <br>
+            <input type="text" class="form-control" name="diamRueda2" id="diamRueda2">
+          </div>        
+        </div>
+
+        <div class="form-row mb-4">
+          <div class="col-md-3 mb-3 text-left">
+            <label>Marca rueda 3</label> <br>
+            <input type="text" class="form-control" name="marcaRueda3" id="marcaRueda3">
+          </div>
+          <div class="col-md-3 mb-3 text-left">
+            <label>Diámetro rueda 3</label> <br>
+            <input type="text" class="form-control" name="diamRueda3" id="diamRueda3">
+          </div>
+          <div class="col-md-3 mb-3 text-left">
+            <label>Marca rueda 4</label> <br>
+            <input type="text" class="form-control" name="marcaRueda4" id="marcaRueda3">
+          </div>
+          <div class="col-md-3 mb-3 text-left">
+            <label>Diámetro rueda 4</label> <br>
+            <input type="text" class="form-control" name="diamRueda4" id="diamRueda4">
+          </div>        
+        </div>
+      
+      <button class="btn btn-primary" onclick="addWheel(
+        document.getElementById('diamRueda1').value,
+        document.getElementById('marcaRueda1').value,
+        ); return false;">Add Wheels
+      </button>
+    </form>  
+
+    <div id="carInfo"></div>
+    <div class="container">
+      <div class="row mt-4 text-left">
+        <div class="col-12 tituloRtado" id="tituloRtado">
+          <h4>CAR DATA</h4>
+        </div>
+        <div class="col-4" id="mostraRtadoPaso1">
+        </div>
+      </div>
+    </div>
+
+  </div>  <!-- cierra div.container -->
+
+  <script src="../controllers/controller.js"></script>
+
+</body>
+</html>
