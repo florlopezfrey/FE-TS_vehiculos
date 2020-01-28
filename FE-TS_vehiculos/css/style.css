@@ -3,3 +3,7 @@ body {font-family: 'Roboto', sans-serif; }
 .paso2 {display: none;}
 
 .tituloRtado {visibility: hidden;}
+
+h1, h2, h3 {color: #eb345e;}
+h5, p, div {color: grey;}
+.btn {background-color: #3496eb;}
