@@ -16,7 +16,7 @@ function createCar() {
     var color = document.getElementById('color').value;
     car = new Car(plate, color, brand);
     var acumErroresCar = [];
-    var regExPlate = ""; ///^[0-9]{4}[a-z]{3}$/gi;
+    var regExPlate = /^[0-9]{4}[a-z]{3}$/gi;
     var plateOk = plate.match(regExPlate);
     if (plateOk == null) {
         acumErroresCar.push('- Ingrese un PLATE compuesto por 4 números y 3 letras');
