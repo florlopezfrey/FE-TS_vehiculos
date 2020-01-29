@@ -13,7 +13,6 @@ var rueda4 = <HTMLElement>document.getElementById('rueda4');
 
 var car:Car;
 
-
 function createCar(){
     var plate = ((<HTMLInputElement>document.getElementById('plate')).value).toUpperCase( );
     var brand = (<HTMLInputElement>document.getElementById('brand')).value;
@@ -23,7 +22,7 @@ function createCar(){
 
     var acumErroresCar: string[] = [];
     
-    var regExPlate = /^[0-9]{4}[a-z]{3}$/gi;
+    var regExPlate = "";///^[0-9]{4}[a-z]{3}$/gi;
     var plateOk = plate.match(regExPlate);
     if (plateOk == null) {
         acumErroresCar.push('- Ingrese un PLATE compuesto por 4 números y 3 letras');
@@ -47,56 +46,43 @@ function createCar(){
 
 
 function addWheels() {
-    // ¿se puede juntar en 1?
-    var marcaRueda1 = (<HTMLInputElement>document.getElementById('marcaRueda1')).value;
-    var marcaRueda2 = (<HTMLInputElement>document.getElementById('marcaRueda2')).value;
-    var marcaRueda3 = (<HTMLInputElement>document.getElementById('marcaRueda3')).value;
-    var marcaRueda4 = (<HTMLInputElement>document.getElementById('marcaRueda4')).value;
-
-    let todasLasMarcas = [marcaRueda1, marcaRueda2, marcaRueda3, marcaRueda4];
-    
-    var diamRueda1 = (<HTMLInputElement>document.getElementById('diamRueda1')).value;
-    var diamRueda2 = (<HTMLInputElement>document.getElementById('diamRueda2')).value;
-    var diamRueda3 = (<HTMLInputElement>document.getElementById('diamRueda3')).value;
-    var diamRueda4 = (<HTMLInputElement>document.getElementById('diamRueda4')).value;
-
-    let todosLosDiametrosOr = [diamRueda1, diamRueda2, diamRueda3, diamRueda4];
-    let todosLosDiametrosNum = []; //array vacio que recibirá los valores de diametro como numero
+    var todosLosDiametrosNum = []; //array vacio que recibirá los valores de diametro como numero
     
     var acumErroresWheel: string[] = [];
     
-    // Esta funcion convierte los diametros a numero y luego valida los datos
-    for (var i = 0; i < 4; i++) {  
-        var diamValueNum = Number(todosLosDiametrosOr[i]); // convierte el input (que es siempre un string) en numero
-        if (todasLasMarcas[i] == "") {
-            acumErroresWheel.push('- Por favor complete la marca de la RUEDA ' + (i+1));
-        }
+    for (var i = 0; i < 4; i++) { 
+        var diamEnNum: number;
+        var diametroInput = (<HTMLInputElement>document.getElementById('diamRueda'+(i+1))).value;
+        var diamValueNum = Number(diametroInput); // convierte el input (que es siempre un string) en numero
         if (isNaN(diamValueNum)) { //validar si ha ingresado un numero o un NaN
             acumErroresWheel.push('- El diámetro de RUEDA ' + (i+1) + ' debe ser únicamente numérico');
         } else if (diamValueNum <= 0.4 || diamValueNum >= 2) {
             acumErroresWheel.push('- Ingrese un diámetro mayor que 0.4 y menor que 2 para RUEDA ' + (i+1));
         } else {
-            todosLosDiametrosNum.push(diamValueNum);
-        } 
+            diamEnNum = diamValueNum;
+    
+            var marcaInput = (<HTMLInputElement>document.getElementById('marcaRueda'+(i+1))).value;
+
+            if (marcaInput == "") {
+                acumErroresWheel.push('- Por favor complete la marca de la RUEDA ' + (i+1));
+            }
+
+            if (acumErroresWheel && acumErroresWheel.length) {
+                alert(acumErroresWheel.join('\n'));
+                return;
+            } else {
+                var rueda = new Wheel(diamEnNum, marcaInput); 
+                car.addWheel(rueda);
+            }
+        }
+
     }
 
-    if (acumErroresWheel && acumErroresWheel.length) {
-        alert(acumErroresWheel.join('\n'));
-        return;
-    } 
 
-    // esta funcion suma las ruedas a Car
-    for (var i = 0; i < 4; i++) {   
-        var rueda = new Wheel(todosLosDiametrosNum[i], todasLasMarcas[i]); 
-        car.addWheel(rueda);
-    }
+    //querySelector
 
     rueda1.innerHTML = "Marca: " + car.wheels[0].brand + "<br/>Diametro: " + car.wheels[0].diameter;
     rueda2.innerHTML = "Marca: " + car.wheels[1].brand + "<br/>Diametro: " + car.wheels[1].diameter;
     rueda3.innerHTML = "Marca: " + car.wheels[2].brand + "<br/>Diametro: " + car.wheels[2].diameter;
     rueda4.innerHTML = "Marca: " + car.wheels[3].brand + "<br/>Diametro: " + car.wheels[3].diameter;
 }
-
-
-
-// todos los campos required
