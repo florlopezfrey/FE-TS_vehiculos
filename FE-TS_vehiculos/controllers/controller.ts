@@ -6,11 +6,6 @@ var tituloRtado = <HTMLElement>document.getElementById('tituloRtado');
 var formPaso1 = <HTMLElement>document.getElementById('formPaso1');
 var formPaso2 = <HTMLElement>document.getElementById('formPaso2');
 
-var rueda1 = <HTMLElement>document.getElementById('rueda1');
-var rueda2 = <HTMLElement>document.getElementById('rueda2');
-var rueda3 = <HTMLElement>document.getElementById('rueda3');
-var rueda4 = <HTMLElement>document.getElementById('rueda4');
-
 var car:Car;
 
 
@@ -47,10 +42,13 @@ function createCar(){
 
 
 function addWheels() {
+    // busco cuantas ruedas va a poder cargar el usuario
+    var cantRuedas = ((document.getElementsByClassName('rueda')).length)/2; //divido por 2 porque la class .rueda aparece 2 veces por cad rueda (diametro y marca)
+
     var acumErroresWheel: string[] = [];
     
     // Esta funcion convierte los diametros a numero y luego valida los datos
-    for (var i = 0; i < 4; i++) {  
+    for (var i = 0; i < cantRuedas; i++) {  
         var diamValueNum = Number((<HTMLInputElement>document.getElementById('diamRueda'+(i+1))).value); // convierte el input (que es siempre un string) en numero
         if ((<HTMLInputElement>document.getElementById('marcaRueda'+(i+1))).value == "") {
             acumErroresWheel.push('- Por favor complete la marca de la RUEDA ' + (i+1));
@@ -67,18 +65,17 @@ function addWheels() {
         alert(acumErroresWheel.join('\n'));
         return;
     } else {
-        // esta funcion suma las ruedas a Car
-        for (var i = 0; i < 4; i++) {   
+        // esta funcion suma las ruedas a Car e imprime los resultados
+        for (var i = 0; i < cantRuedas; i++) {   
             var diamOk = Number((<HTMLInputElement>document.getElementById('diamRueda'+(i+1))).value);
             var marcaOk = (<HTMLInputElement>document.getElementById('marcaRueda'+(i+1))).value;
 
             var rueda = new Wheel(diamOk, marcaOk); 
             car.addWheel(rueda);
+
+            //imprimo los resultados
+            (<HTMLElement>document.getElementById('rueda'+(i+1))).innerHTML = "Marca: " + car.wheels[i].brand + "<br/>Diametro: " + car.wheels[i].diameter;
         }
     }
-
-    rueda1.innerHTML = "Marca: " + car.wheels[0].brand + "<br/>Diametro: " + car.wheels[0].diameter;
-    rueda2.innerHTML = "Marca: " + car.wheels[1].brand + "<br/>Diametro: " + car.wheels[1].diameter;
-    rueda3.innerHTML = "Marca: " + car.wheels[2].brand + "<br/>Diametro: " + car.wheels[2].diameter;
-    rueda4.innerHTML = "Marca: " + car.wheels[3].brand + "<br/>Diametro: " + car.wheels[3].diameter;
+ 
 }
