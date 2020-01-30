@@ -16,7 +16,7 @@ function createCar() {
     var color = document.getElementById('color').value;
     car = new Car(plate, color, brand);
     var acumErroresCar = [];
-    var regExPlate = /^[0-9]{4}[a-z]{3}$/gi;
+    var regExPlate = ""; ///^[0-9]{4}[a-z]{3}$/gi;
     var plateOk = plate.match(regExPlate);
     if (plateOk == null) {
         acumErroresCar.push('- Ingrese un PLATE compuesto por 4 números y 3 letras');
@@ -38,35 +38,33 @@ function createCar() {
     alert(acumErroresCar.join('\n'));
 }
 function addWheels() {
-    var todosLosDiametrosNum = []; //array vacio que recibirá los valores de diametro como numero
     var acumErroresWheel = [];
+    // Esta funcion convierte los diametros a numero y luego valida los datos
     for (var i = 0; i < 4; i++) {
-        var diamEnNum;
-        var diametroInput = document.getElementById('diamRueda' + (i + 1)).value;
-        var diamValueNum = Number(diametroInput); // convierte el input (que es siempre un string) en numero
+        var diamValueNum = Number(document.getElementById('diamRueda' + (i + 1)).value); // convierte el input (que es siempre un string) en numero
+        if (document.getElementById('marcaRueda' + (i + 1)).value == "") {
+            acumErroresWheel.push('- Por favor complete la marca de la RUEDA ' + (i + 1));
+        }
         if (isNaN(diamValueNum)) { //validar si ha ingresado un numero o un NaN
             acumErroresWheel.push('- El diámetro de RUEDA ' + (i + 1) + ' debe ser únicamente numérico');
         }
         else if (diamValueNum <= 0.4 || diamValueNum >= 2) {
             acumErroresWheel.push('- Ingrese un diámetro mayor que 0.4 y menor que 2 para RUEDA ' + (i + 1));
         }
-        else {
-            diamEnNum = diamValueNum;
-            var marcaInput = document.getElementById('marcaRueda' + (i + 1)).value;
-            if (marcaInput == "") {
-                acumErroresWheel.push('- Por favor complete la marca de la RUEDA ' + (i + 1));
-            }
-            if (acumErroresWheel && acumErroresWheel.length) {
-                alert(acumErroresWheel.join('\n'));
-                return;
-            }
-            else {
-                var rueda = new Wheel(diamEnNum, marcaInput);
-                car.addWheel(rueda);
-            }
+    }
+    if (acumErroresWheel && acumErroresWheel.length) {
+        alert(acumErroresWheel.join('\n'));
+        return;
+    }
+    else {
+        // esta funcion suma las ruedas a Car
+        for (var i = 0; i < 4; i++) {
+            var diamOk = Number(document.getElementById('diamRueda' + (i + 1)).value);
+            var marcaOk = document.getElementById('marcaRueda' + (i + 1)).value;
+            var rueda = new Wheel(diamOk, marcaOk);
+            car.addWheel(rueda);
         }
     }
-    //querySelector
     rueda1.innerHTML = "Marca: " + car.wheels[0].brand + "<br/>Diametro: " + car.wheels[0].diameter;
     rueda2.innerHTML = "Marca: " + car.wheels[1].brand + "<br/>Diametro: " + car.wheels[1].diameter;
     rueda3.innerHTML = "Marca: " + car.wheels[2].brand + "<br/>Diametro: " + car.wheels[2].diameter;
