@@ -23,7 +23,7 @@ function createCar(){
 
     var acumErroresCar: string[] = [];
     
-    var regExPlate = "";///^[0-9]{4}[a-z]{3}$/gi;
+    var regExPlate = /^[0-9]{4}[a-z]{3}$/gi;
     var plateOk = plate.match(regExPlate);
     if (plateOk == null) {
         acumErroresCar.push('- Ingrese un PLATE compuesto por 4 números y 3 letras');
